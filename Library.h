@@ -12,7 +12,7 @@
 class Library {
 private:
     std::vector<Book> bookList_ = {};
-    std::vector<std::reference_wrapper<Book>> favorites_ = {};
+    std::vector<Book> favorites_ = {};
 public:
     Library() {};
 
@@ -23,13 +23,14 @@ public:
     void RemoveBook();
     void AddBookToFavorites();
     void MarkAsRead();
-    std::vector<std::reference_wrapper<Book>> GetFavorites();
+
+    std::vector<Book> GetFavorites();
     std::vector<Book> Search(const std::string& substr) const;
     void PrintSearch();
     void UpdateFavorites();
-    void UpdateRecPoints() const;
-    std::vector<Book> Recomends() const;
-    void PrintRecomends() const;
+    void UpdateRecPoints();
+    std::vector<Book> Recomends();
+    void PrintRecomends();
     bool Action();
     void UpdateId();
 
