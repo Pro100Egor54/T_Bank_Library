@@ -15,4 +15,5 @@ add_executable(T_Bank_Library
         Library.cpp
         Library.h
         Genre.h
+        Welcome.h
 )
