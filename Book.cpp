@@ -130,7 +130,8 @@ std::ostream& operator << (std::ostream& out, Book& book) {
     return out << book.GetId() << "-id| "
         << book.GetTitle()
         << " by " << book.GetAuthor()
-        << ", " << book.GetPubYear() << " year of publication"
+        << ", " << book.GetPubYear() << " year of publication, "
+        << GenreNames.at(book.GetGenre())
         << std::endl;
 }
 

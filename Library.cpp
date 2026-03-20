@@ -55,6 +55,7 @@ void Library::ListOutWihtChoice() const {
             break;
         case 3:
             cmp = PubYearCmp;
+            break;
         default:
             std::cout << "Not a valid choice, used defualt sorting by title." << std::endl;
             cmp = TitleCmp;
@@ -102,7 +103,6 @@ void Library::ListOutWihtChoice() const {
             break;
 
         case 3:
-            ListOut(cmp, genreFiltr, wasReadFiltr);
             break;
 
         default:
@@ -111,6 +111,7 @@ void Library::ListOutWihtChoice() const {
             if (!typedAnthg) std::cout << "Not found any book matching the filter." << std::endl;
             break;
     }
+    ListOut(cmp, genreFiltr, wasReadFiltr);
 }
 
 std::vector<Book> Library::GetFavorites() {
