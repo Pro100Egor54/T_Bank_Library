@@ -113,7 +113,7 @@ void Library::ListOutWihtChoice() const {
     }
 }
 
-std::vector<std::reference_wrapper<Book>> Library::GetFavorites() {
+std::vector<Book> Library::GetFavorites() {
     return favorites_;
 }
 
@@ -203,24 +203,26 @@ void Library::UpdateFavorites() {
     }
 }
 
-void Library::UpdateRecPoints() const{
-    for (Book updatingBook : bookList_) {
+void Library::UpdateRecPoints() {
+    UpdateFavorites();
+    for (Book& updatingBook : bookList_) {
         int recPoints = 0;
-        for (Book favoriteBook : favorites_) {
+        for (Book& favoriteBook : favorites_) {
             recPoints += CalculateSimilarity(updatingBook, favoriteBook);
         }
         updatingBook.SetRecPoints(recPoints);
     }
 }
 
-std::vector<Book> Library::Recomends() const {
+std::vector<Book> Library::Recomends()  {
     std::vector<Book> recomends = bookList_;
     UpdateRecPoints();
     sort(recomends.begin(), recomends.end(), RecomendationCmp);
     return recomends;
 }
 
-void Library::PrintRecomends() const {
+void Library::PrintRecomends() {
+    UpdateRecPoints();
     std::vector<Book> recomends = Recomends();
     bool typedAnthg = false;
     for (Book book : recomends) {
@@ -251,6 +253,7 @@ bool Library::Action() {
     std::cin >> choice;
     std::string substr;
     std::vector<Book> bookList = Search(substr);
+    bool typedAnthg = false;
 
     switch (choice) {
         case 1://"1. Add book;"
@@ -268,9 +271,13 @@ bool Library::Action() {
         case 5:
             MarkAsRead();
         case 6://"6. Print favorites list;"
+            typedAnthg = false;
             for (Book book : favorites_) {
                 std::cout << book;
+                typedAnthg = true;
             }
+            if (!typedAnthg) std::cout << "You have not got any book in favorites.";
+            typedAnthg = false;
             break;
         case 7://"7. Print all books;"
             ListOutWihtChoice();
