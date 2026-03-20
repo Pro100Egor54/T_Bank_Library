@@ -160,18 +160,17 @@ void Library::MarkAsRead() {
     int wasRead;
     std::cout << "Input ID of book, what you want to mark as read/not read: " << std::endl;
     std::cin >> bookId;
-    std::cout << "1. Mark as READ;" << std::endl;
-    std::cout << "0. Mark as NOTREAD;" << std::endl;
-    std::cin >> wasRead;
-    try {
+    if (bookId < bookList_.size()) {
+        std::cout << "1. Mark as READ;" << std::endl;
+        std::cout << "0. Mark as NOTREAD;" << std::endl;
+        std::cin >> wasRead;
         Book& book = bookList_[bookId];
         if (wasRead == 0 || wasRead == 1) {
             book.SetStatus(wasRead);
             std::cout << "Status setted successfully" << std::endl;
         } else std::cout << "Invalid input, status no changed!" << std::endl;
-    } catch (...) {
-        std::cout << "Invalid book ID." << std::endl;
-    }
+    } else std::cout << "Invalid input, status no changed!" << std::endl;
+    std::cout << "Invalid book ID." << std::endl;
 }
 
 std::vector<Book> Library::Search(const std::string& substr) const{
