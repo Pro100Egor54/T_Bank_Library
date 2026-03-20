@@ -5,6 +5,8 @@
 #ifndef T_BANK_LIBRARY_GENRE_H
 #define T_BANK_LIBRARY_GENRE_H
 #include <map>
+#include <iostream>
+#include <string>
 
 enum Genre {
     Action_and_adventure=1,
@@ -28,6 +30,7 @@ enum Genre {
     Essay=19,
     Biography_и_Autobiography=20,
     Memoir=21,
+    Any=22
 };
 
 const std::map<Genre, std::string> GenreNames = {
@@ -52,6 +55,28 @@ const std::map<Genre, std::string> GenreNames = {
     {Essay, "Essay"},
     {Biography_и_Autobiography, "Biography_и_Autobiography"},
     {Memoir, "Memoir"},
+    {Any, "Any"}
 };
+
+inline Genre ChooseGenre() {
+    for (auto genreName : GenreNames) {
+        Genre genre = genreName.first;
+        std::string name = genreName.second;
+        std::cout << genre << ") " << name << std::endl;
+    }
+
+    int n;
+    Genre genre = Any;
+    try{
+        std::cin >> n;
+        genre = static_cast<Genre>(n);
+    }
+    catch (...) {
+        std::cout << "Invalid genre number: " << n << std::endl;
+        std::cout << "Setted default genre {Any}." << std::endl;
+    }
+
+    return genre;
+}
 
 #endif //T_BANK_LIBRARY_GENRE_H

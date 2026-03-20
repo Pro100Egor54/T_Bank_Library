@@ -10,21 +10,26 @@
 
 class Book {
 private:
+    int id_ = 0;
     std::string title_;
     std::string author_;
     Genre genre_;
-    unsigned publicationYear_;
+    unsigned publicationYear_{};
     std::string description_;
+    int recPoints_ = 0;
 
-    bool inFavorites_;
-    bool wasRead_;
+    bool inFavorites_=false;
+    bool wasRead_=false;
 
 public:
-    Book(std::string title, std::string author, Genre genre, unsigned publicationYear, std::string description);
-    Book();
+    Book(std::string title, std::string author, Genre genre, unsigned publicationYear, std::string description, int id,
+        bool wasRead, bool inFavorites, int recPoints);
+    Book(int id);
 
     void AddToFavorites();
-    void ReadBook();
+    void Read();
+    void SetRecPoints(int recPoints);
+    void SetId(int id);
 
     std::string GetTitle() const;
     std::string GetAuthor() const;
@@ -33,11 +38,18 @@ public:
     std::string GetDescription() const;
     bool IsInFavorites_() const;
     bool WasRead() const;
-    void SaveBook();
+    int GetId() const;
+    int GetRecPoints() const;
+    std::ostream& PrintBookInfo (std::ostream& out);
 };
 
-bool TitleCmp(Book book1, Book book2);
-bool AuthorCmp(Book book1, Book book2);
-bool GenreCmp(Book book1, Book book2);
+int CalculateSimilarity(const Book& book1, const Book& book2);
+
+bool TitleCmp(const Book& book1, const Book& book2);
+bool AuthorCmp(const Book& book1, const Book& book2);
+bool PubYearCmp(const Book& book1, const Book& book2);
+bool RecomendationCmp(const Book& book1, const Book& book2);
+
+std::ostream& operator << (std::ostream& out, Book& book);
 
 #endif //T_BANK_LIBRARY_BOOK_H
