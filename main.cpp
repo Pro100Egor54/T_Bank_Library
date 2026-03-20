@@ -4,10 +4,14 @@
 #include <iostream>
 #include "Book.h"
 #include "Library.h"
+#include "Welcome.h"
 
 int main() {
     Library library;
-    std::cout << "Welcome to yout personal library!" << std::endl;
+    try{Welcome();}
+    catch (...) {
+        std::cout << "Welcome to yout personal library!" << std::endl;
+    }
     try {
         int a = library.Load();
         std::cout << "Library loaded successfully (code " << a << "): " << std::endl;
