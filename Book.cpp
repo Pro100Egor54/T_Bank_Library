@@ -39,6 +39,10 @@ void Book::SetId(int id) {
     id_ = id;
 }
 
+void Book::SetStatus(bool wasRead) {
+    wasRead_ = wasRead;
+}
+
 std::string Book::GetTitle() const {
     return title_;
 }
@@ -109,10 +113,10 @@ int CalculateSimilarity(const Book& book1, const Book& book2) {
 }
 
 bool TitleCmp(const Book& book1, const Book& book2) {
-    return book1.GetTitle() > book2.GetTitle();
+    return book1.GetTitle() < book2.GetTitle();
 }
 bool AuthorCmp(const Book& book1, const Book& book2) {
-    return book1.GetAuthor() > book2.GetAuthor();
+    return book1.GetAuthor() < book2.GetAuthor();
 }
 bool PubYearCmp(const Book& book1, const Book& book2) {
     return book1.GetPubYear() > book2.GetPubYear();

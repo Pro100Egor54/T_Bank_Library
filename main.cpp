@@ -23,7 +23,11 @@ int main() {
 
     bool workContinue = true;
     while (workContinue) {
-        workContinue = library.Action();
+        try {
+            workContinue = library.Action();
+        } catch (...) {
+            std::cout << "Action is not able to release!" << std::endl;
+        }
     }
     return 0;
 }

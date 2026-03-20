@@ -30,6 +30,7 @@ public:
     void Read();
     void SetRecPoints(int recPoints);
     void SetId(int id);
+    void SetStatus(bool wasRead);
 
     std::string GetTitle() const;
     std::string GetAuthor() const;

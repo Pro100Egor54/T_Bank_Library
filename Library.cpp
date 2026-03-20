@@ -128,10 +128,10 @@ void Library::RemoveBook() {
     int bookId;
     std::cout << "Input ID of book, what you want to remove: " << std::endl;
     std::cin >> bookId;
-    try {
+    if (bookId < bookList_.size()) {
         bookList_.erase(bookList_.begin() + bookId);
         std::cout << "Book removed successfully." << std::endl;
-    } catch (...) {
+    } else {
         std::cout << "Invalid book ID." << std::endl;
     }
 }
@@ -145,6 +145,7 @@ void Library::AddBookToFavorites() {
         if (!book.IsInFavorites_()) {
             book.AddToFavorites();
             favorites_.emplace_back(book);
+            std::cout << "Book added in favorite successfully." << std::endl;
         } else {
             std::cout << "Book already is in favorites." << std::endl;
         }
@@ -155,15 +156,18 @@ void Library::AddBookToFavorites() {
 
 void Library::MarkAsRead() {
     int bookId;
-    std::cout << "Input ID of book, what you want to mark as read: " << std::endl;
+    int wasRead;
+    std::cout << "Input ID of book, what you want to mark as read/not read: " << std::endl;
     std::cin >> bookId;
+    std::cout << "1. Mark as READ;" << std::endl;
+    std::cout << "0. Mark as NOTREAD;" << std::endl;
+    std::cin >> wasRead;
     try {
         Book& book = bookList_[bookId];
-        if (!book.WasRead()) {
-            book.Read();
-        } else {
-            std::cout << "Book already is read." << std::endl;
-        }
+        if (wasRead == 0 || wasRead == 1) {
+            book.SetStatus(wasRead);
+            std::cout << "Status setted successfully" << std::endl;
+        } else std::cout << "Invalid input, status no changed!" << std::endl;
     } catch (...) {
         std::cout << "Invalid book ID." << std::endl;
     }
@@ -242,7 +246,7 @@ bool Library::Action() {
     std::cout << "2. Remove book;" << std::endl;
     std::cout << "3. Search book;" << std::endl;
     std::cout << "4. Add book to favorite;" << std::endl;
-    std::cout << "5. Mark book as read;" << std::endl;
+    std::cout << "5. Mark book as read/not read;" << std::endl;
     std::cout << "6. Print favorites list;" << std::endl;
     std::cout << "7. Print all books;" << std::endl;
     std::cout << "8. Print recomendation list;" << std::endl;
@@ -270,6 +274,7 @@ bool Library::Action() {
             break;
         case 5:
             MarkAsRead();
+            break;
         case 6://"6. Print favorites list;"
             typedAnthg = false;
             for (Book book : favorites_) {
@@ -312,7 +317,7 @@ void Library::Save() const{
         for (Book book : bookList_) {
             if (out.is_open())
                 book.PrintBookInfo(out);
-            std::cout << "Book " << book.GetId() << " has been written" << std::endl;
+            std::cout << "Book id(" << book.GetId() << ") has been written" << std::endl;
         }
     }
     if (out.is_open()) {
